@@ -115,12 +115,21 @@ export class InitVus {
       modelName: "text-embedding-v2",
     });
   }
-  private  getGit(repoUrl = process.env.REPO_URL) {
-    const repoName = process.env.REPO_NAME
+  private getGit(repoUrl = process.env.REPO_URL) {
+    const repoName = process.env.REPO_NAME;
     const repoPath = join(process.cwd(), repoName);
 
+    const removeGitDir = () => {
+      try {
+        fs.rmSync(join(repoPath, '.git'), { recursive: true, force: true });
+        console.log('成功删除.git目录');
+      } catch (err) {
+        console.error('删除.git目录失败:', err);
+      }
+    };
+
     if (!existsSync(repoPath)) {
-      // 如果目录不存在，执行 clone
+      // 克隆仓库并删除.git
       const cloneCommand = `git clone ${repoUrl}`;
       exec(cloneCommand, (error, stdout, stderr) => {
         if (error) {
@@ -132,9 +141,10 @@ export class InitVus {
           return;
         }
         console.log(`克隆成功: ${stdout}`);
+        removeGitDir();
       });
     } else {
-      // 如果目录存在，执行 pull
+      // 拉取更新并删除.git
       const pullCommand = `cd ${repoPath} && git pull`;
       exec(pullCommand, (error, stdout, stderr) => {
         if (error) {
@@ -146,6 +156,7 @@ export class InitVus {
           return;
         }
         console.log(`拉取成功: ${stdout}`);
+        removeGitDir();
       });
     }
   }
