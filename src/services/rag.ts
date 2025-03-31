@@ -50,7 +50,7 @@ const convertDocsToString = (documents: Document[]): string => {
 };
 
 interface RagConfigType {
-  modelName: Exclude<keyof typeof GetModel, 'getModel'>,
+
   BaseChatModelParams?:{
     [key: string]: any;
   }
@@ -60,9 +60,9 @@ export class Rag {
   vecStore:Milvus
   ragChain
   constructor
-  (vecStore:Milvus,config:RagConfigType = {modelName : "qwenPlus",BaseChatModelParams:{}}) {
+  (vecStore:Milvus,config:RagConfigType = {BaseChatModelParams:{}}) {
     this.vecStore = vecStore
-    this.model = GetModel.getModel(config.modelName,config.BaseChatModelParams);
+    this.model = GetModel.getModel(process.env.DEFAULT_MODEL,config.BaseChatModelParams);
    this.ragChain= this.init()
   }
   init(){
@@ -104,7 +104,7 @@ export class Rag {
   rephraseChain(){
    return RunnableSequence.from([
       rephraseChainPrompt,
-      GetModel.getModel("deepSeek",{temperature: 0.2,})
+      GetModel.getModel(process.env.DEFAULT_MODEL ,{temperature: 0.2,})
       ,
       new StringOutputParser(),
     ]);

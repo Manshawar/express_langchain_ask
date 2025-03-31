@@ -22,7 +22,7 @@ export class GetModel{
       ...config
     });
   }
- static getModel(modelName: Exclude<keyof typeof GetModel, 'getModel'>, BaseChatModelParams: {
+ static getModel(modelName: Exclude<keyof typeof GetModel, 'getModel'|'prototype'>, BaseChatModelParams: {
     [key: string]: any;
   }) {
     const model = (GetModel[modelName] as Function)(BaseChatModelParams);

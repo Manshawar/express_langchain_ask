@@ -2,7 +2,7 @@ import { app } from "./app";
 import "dotenv/config"
 const port = app.get("port");
 
-const server = app.listen(process.env.EXPRESS_PORT, onListening);
+const server = app.listen(Number.parseInt(process.env.EXPRESS_PORT),"0.0.0.0",onListening);
 server.on("error", onError);
 
 function onError(error: NodeJS.ErrnoException) {
@@ -26,10 +26,11 @@ function onError(error: NodeJS.ErrnoException) {
 }
 
 function onListening() {
-    // const addr = server.address();
-    // const bind =
-    //     typeof addr === "string" ? `pipe ${addr}` : `port ${process.env.Port}`;
+    const addr = server.address();
+    const bind =
+        typeof addr === "string" ? `pipe ${addr}` : `port ${process.env.Port}`;
     console.log(`Listening on ${process.env.EXPRESS_PORT}`);
+ 
 }
 
 export default server;
