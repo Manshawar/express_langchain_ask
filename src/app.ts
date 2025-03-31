@@ -27,7 +27,7 @@ let intVus =new InitVus();
 app.use(cors());
 app.use(bodyParser.json())
 // Express configuration
-app.set("port", process.env.PORT || 3000);
+app.set("port", process.env.EXPRESS_PORT || 3000);
 app.set("views", path.join(__dirname, "../views"));
 app.set("view engine", "pug");
 
