@@ -2,7 +2,7 @@ import { app } from "./app";
 import "dotenv/config"
 const port = app.get("port");
 
-const server = app.listen(Number.parseInt(process.env.EXPRESS_PORT),"0.0.0.0",onListening);
+const server = app.listen(Number.parseInt(process.env.EXPRESS_PORT),process.env.EXPRESS_IP,onListening);
 server.on("error", onError);
 
 function onError(error: NodeJS.ErrnoException) {
