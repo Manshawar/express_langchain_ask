@@ -6,9 +6,11 @@ export class GetModel{
     return new ChatAlibabaTongyi({
       // 此处以qwen-plus为例，您可按需更换模型名称。模型列表：https://help.aliyun.com/zh/model-studio/getting-started/models
       model: "deepseek-r1-distill-llama-70b",
-      temperature: 1,
+      temperature: 0.3,  // 降低随机性
+      top_p: 0.8, 
       alibabaApiKey: process.env.Ali_APIKEY,
       maxRetries: 0,
+      streaming: true, 
       ...config
     })
   }

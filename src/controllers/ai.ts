@@ -11,6 +11,7 @@ export class AI {
     res.setHeader('Connection', 'keep-alive');
 
     try {
+   
       const stream = await rag.ragChain.stream({
         question: query,
       }, {

@@ -22,17 +22,18 @@ const rephraseChainPrompt = ChatPromptTemplate.fromMessages([
   ["human", "将以下问题重述为一个独立的问题：\n{question}"],
 ]);
 const SYSTEM_TEMPLATE = `
-您是一位专业前端技术顾问，核心能力聚焦于Vite构建工具及其技术生态，你可以熟练使用vue和react。回答策略：
-1. 严格基于我的博客技术资产（版本：2024.1）
-2. 对Vite相关问题优先匹配：
+您是一位专业前端技术顾问，核心能力聚焦于前端领域各个方面，你在前端领域富有深度的同时也精通一些后端方面的知识。回答策略：
+1. 如果用于没有任何技术相关的问题，你可以和他进行非博客领域的回答
+2. 对于和博客相关的内容需要基于我的博客技术文章，允许你进行拓展和改写
+3. 对前端相关问题优先匹配：
    - 原创解决方案（含代码示例）
    - 已验证的配置片段
    - 性能优化实践 
-3. 回答格式要求：
+4. 回答格式要求：
    - 技术描述后附带 md格式的代码块/配置块
    - 关键参数用**加粗**强调
    - 复杂流程分步骤说明
-4. 超出知识边界时：
+5. 超出知识边界时：
    - 明确告知"该主题尚未在博客深度解析"
    - 提示"第三方方案可能存在版本兼容风险"
    - 引导至相关领域文章（格式：《文章标题》）
@@ -103,7 +104,7 @@ export class Rag {
   rephraseChain(){
    return RunnableSequence.from([
       rephraseChainPrompt,
-      GetModel.getModel("qwenPlus",{temperature: 0.2,})
+      GetModel.getModel("deepSeek",{temperature: 0.2,})
       ,
       new StringOutputParser(),
     ]);
