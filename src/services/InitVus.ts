@@ -30,7 +30,7 @@ export class InitVus {
     return res
   }
   async InitMilvus() {
-    this.getGit()    
+    
     this.milvusclient = new MilvusClient({
       address: config.clientConfig.address,
       database: config.clientConfig.database
@@ -114,45 +114,7 @@ export class InitVus {
       modelName: "text-embedding-v2",
     });
   }
-  private getGit(repoUrl = process.env.REPO_URL) {
-    const repoName = process.env.REPO_NAME;
-    const repoPath = join(process.cwd(), repoName);
-
-    const removeGitDir = () => {
-      try {
-        fs.rmSync(join(repoPath, '.git'), { recursive: true, force: true });
-        console.log('成功删除.git目录');
-      } catch (err) {
-        console.error('删除.git目录失败:', err);
-      }
-    };
-
-    // 强制删除已存在的仓库目录
-    if (existsSync(repoPath)) {
-      try {
-        fs.rmSync(repoPath, { recursive: true, force: true });
-        console.log(`已删除现有仓库目录: ${repoPath}`);
-      } catch (err) {
-        console.error('删除仓库目录失败:', err);
-        return;
-      }
-    }
-
-    // 执行克隆操作
-    const cloneCommand = `git clone ${repoUrl}`;
-    exec(cloneCommand, (error, stdout, stderr) => {
-      if (error) {
-        console.error(`克隆错误: ${error.message}`);
-        return;
-      }
-      if (stderr) {
-        console.error(`错误输出: ${stderr}`);
-        return;
-      }
-      console.log(`克隆成功: ${stdout}`);
-      removeGitDir();
-    });
-  }
+ 
   private async getVectore(){
    return this.vectorStore = await Milvus.fromExistingCollection(
       this.embeddings, // 你的embedding模型

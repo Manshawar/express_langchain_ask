@@ -8,13 +8,14 @@ import bodyParser from "body-parser"
 // Routes
 import { index } from "./routes/index";
 import {InitVus} from "./services/InitVus"
-
+import { initGit } from "./services/initDoc";
 // 将实例挂载到全局对象并初始化
 
 
 // await intVus
 // console.log(intVus)
 // Create Express server
+initGit()
 export const app = express();
 let intVus =new InitVus();
 intVus.init()
