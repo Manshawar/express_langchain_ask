@@ -15,11 +15,15 @@ import { initGit } from "./services/initDoc";
 // await intVus
 // console.log(intVus)
 // Create Express server
-initGit()
+
 export const app = express();
 let intVus =new InitVus();
-intVus.init()
-app.locals.intVus = intVus;
+ initGit().then(()=>{
+  intVus.init()
+  app.locals.intVus = intVus;
+ })
+
+
 app.use(cors());
 app.use(bodyParser.json())
 // Express configuration

@@ -21,12 +21,12 @@ export class InitVus {
   constructor() {
 
     this.embeddings = this.initEmbedding()
-    this.init()
+    // this.init()
   }
   async init() {
 
    let res=await this.InitMilvus()
-    // console.log(res)
+    console.log("向量数据库初始化成功")
     return res
   }
   async InitMilvus() {

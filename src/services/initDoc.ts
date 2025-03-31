@@ -1,8 +1,9 @@
 import path,{join} from "path";
 import fs,{existsSync} from "fs-extra";
 import { exec } from 'child_process';
-export function initGit(repoUrl = process.env.REPO_URL){
+export  function initGit(repoUrl = process.env.REPO_URL){
 
+   return new Promise((resolve,reject)=>{
     const repoName = process.env.REPO_NAME;
     const repoPath = join(process.cwd(), repoName);
 
@@ -10,7 +11,9 @@ export function initGit(repoUrl = process.env.REPO_URL){
       try {
         fs.rmSync(join(repoPath, '.git'), { recursive: true, force: true });
         console.log('成功删除.git目录');
+        resolve("ok")
       } catch (err) {
+        reject("err")
         console.error('删除.git目录失败:', err);
       }
     };
@@ -38,7 +41,9 @@ export function initGit(repoUrl = process.env.REPO_URL){
       
       // 仅在成功完成时删除.git目录
       console.log(`克隆成功: ${stdout}`);
+   
       removeGitDir();
     });
+   })
   
 }
