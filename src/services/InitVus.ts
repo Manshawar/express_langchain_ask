@@ -31,7 +31,7 @@ export class InitVus {
     return res
   }
   async InitMilvus() {
-    // this.getGit()    
+    this.getGit()    
     this.milvusclient = new MilvusClient({
       address: config.clientConfig.address,
       database: config.clientConfig.database
