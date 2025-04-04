@@ -24,9 +24,7 @@ let intVus =new InitVus();
  })
 
 
-app.use(cors({
-  origin: 'https://www.yanghaoran.online/', 
-}));
+app.use(cors());
 app.use(bodyParser.json())
 // Express configuration
 app.set("port", process.env.EXPRESS_PORT || 3000);
